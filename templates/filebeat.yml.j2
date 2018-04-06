@@ -86,11 +86,11 @@ setup.template.settings:
 
 # The name of the shipper that publishes the network data. It can be used to group
 # all the transactions sent by a single shipper in the web interface.
-name: {{ metricbeat_name }}
+name: {{ filebeat_name }}
 
 # The tags of the shipper are included in their own field with each
 # transaction published.
-tags: {{ metricbeat_tags | to_yaml }}
+tags: {{ filebeat_tags | to_yaml }}
 
 # Optional fields that you can specify to add additional information to the
 # output.
@@ -99,10 +99,10 @@ tags: {{ metricbeat_tags | to_yaml }}
 
 
 #============================== Dashboards =====================================
-setup.dashboards.enabled: {{ metricbeat_setup_dashboards }}
+setup.dashboards.enabled: {{ filebeat_setup_dashboards }}
 
-{% if metricbeat_dashboards_url is defined %}
-setup.dashboards.url: "{{ metricbeat_dashboards_url }}"
+{% if filebeat_dashboards_url is defined %}
+setup.dashboards.url: "{{ filebeat_dashboards_url }}"
 {% endif %}
 
 #============================== Kibana =====================================
@@ -184,7 +184,7 @@ logging.level: {{ log_level }}
 # reporting is disabled by default.
 
 # Set to true to enable the monitoring reporter.
-xpack.monitoring.enabled: {{ metricbeat_xpack_monitoring_enabled }}
+xpack.monitoring.enabled: {{ filebeat_xpack_monitoring_enabled }}
 
 # Uncomment to send the metrics to Elasticsearch. Most settings from the
 # Elasticsearch output are accepted here as well. Any setting that is not set is
