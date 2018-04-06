@@ -1,5 +1,22 @@
 ---
 - name: Converge
   hosts: all
+  vars:
+    filebeat_tags:
+      - service-X
+      - web-tier
+    filebeat_modules:
+      - system
+      - apache2
+      - auditd
+      - icinga
+      - kafka
+      - logstash
+      - mysql
+      - nginx
+      - osquery
+      - postgresql
+      - redis
+      - traefik
   roles:
     - role: ansible-elastic-filebeat
