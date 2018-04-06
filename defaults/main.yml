@@ -11,8 +11,8 @@ filebeat_output: elasticsearch
 elasticsearch_protocol: http
 
 # authentication if needed
-#elasticsearch_username: elastic
-#elasticsearch_password: password
+# elasticsearch_username: elastic
+# elasticsearch_password: password
 
 # Available log levels are: error, warning, info, debug
 log_level: info
