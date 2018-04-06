@@ -1,0 +1,9 @@
+---
+# handlers file for ansible-elastic-filebeat
+- name: ensure filebeat is started and enabled
+  listen: restart_filebeat
+  service:
+    name: filebeat
+    state: restarted
+    enabled: yes
+  become: yes
