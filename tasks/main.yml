@@ -35,7 +35,7 @@
     path: "/etc/filebeat/modules.d/{{ item }}.yml"
     state: absent
   with_items: "{{ filebeat_list_modules }}"
-  when: "{{ item }} not in {{ filebeat_modules }}"
+  when: item not in filebeat_modules"
   become: yes
   notify: restart_filebeat
 
