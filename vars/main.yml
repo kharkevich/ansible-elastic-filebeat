@@ -1,2 +1,15 @@
 ---
 # vars file for ansible-elastic-filebeat
+filebeat_list_modules:
+  - system
+  - apache2
+  - auditd
+  - icinga
+  - kafka
+  - logstash
+  - mysql
+  - nginx
+  - osquery
+  - postgresql
+  - redis
+  - traefik

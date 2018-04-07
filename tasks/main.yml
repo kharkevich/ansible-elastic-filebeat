@@ -29,3 +29,21 @@
   notify: restart_filebeat
   become: yes
   with_items: "{{ filebeat_modules }}"
+
+- name: Disabling modules
+  file:
+    path: "/etc/filebeat/modules.d/{{ item }}.yml"
+    state: absent
+  with_items: "{{ filebeat_list_modules }}"
+  when: "{{ item }} not in {{ filebeat_modules }}"
+  become: yes
+  notify: restart_filebeat
+
+- name: Erase unmanaged modules
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_fileglob:
+    - "/etc/filebeat/modules.d/*.yml.disabled"
+  become: yes
+  notify: restart_filebeat
