@@ -184,7 +184,9 @@ logging.level: {{ log_level }}
 # reporting is disabled by default.
 
 # Set to true to enable the monitoring reporter.
-xpack.monitoring.enabled: {{ filebeat_xpack_monitoring_enabled }}
+{% if filebeat_xpack_monitoring_enabled %}
+xpack.monitoring.enabled: true
+{% endif %}
 
 # Uncomment to send the metrics to Elasticsearch. Most settings from the
 # Elasticsearch output are accepted here as well. Any setting that is not set is
