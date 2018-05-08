@@ -1,5 +1,5 @@
 # Ansible Role: Filebeat for Elastic
-[![Travis](https://img.shields.io/travis/kharkevich/ansible-elastic-filebeat.svg)](https://travis-ci.org/kharkevich/ansible-elastic-filebeat) [![Ansible Downloads](https://img.shields.io/ansible/role/d/24853.svg)](https://galaxy.ansible.com/kharkevich/elastic-heartbeat/) [![Ansible Role](https://img.shields.io/ansible/role/24853.svg)](https://galaxy.ansible.com/kharkevich/elastic-heartbeat/)
+[![Travis](https://img.shields.io/travis/kharkevich/ansible-elastic-filebeat.svg)](https://travis-ci.org/kharkevich/ansible-elastic-filebeat) [![Ansible Downloads](https://img.shields.io/ansible/role/d/24853.svg)](https://galaxy.ansible.com/kharkevich/elastic-filebeat/) [![Ansible Role](https://img.shields.io/ansible/role/24853.svg)](https://galaxy.ansible.com/kharkevich/elastic-filebeat/)
 
 An Ansible Role that installs [Filebeat](https://www.elastic.co/products/beats/filebeat) on RedHat or Debian family distributives.
 
