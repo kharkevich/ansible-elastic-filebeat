@@ -82,6 +82,11 @@ setup.template.settings:
   index.codec: best_compression
   #_source.enabled: false
 
+{% if filebeat_index_name is defined %}
+setup.template.name: "{{ filebeat_index_name }}"
+setup.template.pattern: "{{ filebeat_index_name }}-*"
+{% endif %}
+
 #================================ General =====================================
 
 # The name of the shipper that publishes the network data. It can be used to group
@@ -103,6 +108,10 @@ setup.dashboards.enabled: {{ filebeat_setup_dashboards }}
 
 {% if filebeat_dashboards_url is defined %}
 setup.dashboards.url: "{{ filebeat_dashboards_url }}"
+{% endif %}
+
+{% if filebeat_index_name is defined %}
+setup.dashboards.index: "{{ filebeat_index_name }}-*"
 {% endif %}
 
 #============================== Kibana =====================================
@@ -140,16 +149,20 @@ output.elasticsearch:
   # Array of hosts to connect to.
   hosts: {{ elasticsearch_hosts | to_yaml }}
 
+{% if filebeat_index_name is defined %}
+  index: "{{ filebeat_index_name }}-%{[beat.version]}-%{+yyyy.MM.dd}"
+{% endif %}
+
   # Optional protocol and basic auth credentials.
   protocol: "{{ elasticsearch_protocol }}"
 
-  {% if elasticsearch_username is defined %}
-    username: "{{ elasticsearch_username }}"
-  {% endif %}
+{% if elasticsearch_username is defined %}
+  username: "{{ elasticsearch_username }}"
+{% endif %}
 
-  {% if elasticsearch_password is defined %}
-    password: "{{ elasticsearch_password }}"
-  {% endif %}
+{% if elasticsearch_password is defined %}
+  password: "{{ elasticsearch_password }}"
+{% endif %}
 
 {% elif filebeat_output == 'logstash' %}
 #----------------------------- Logstash output --------------------------------

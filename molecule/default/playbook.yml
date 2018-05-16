@@ -2,6 +2,7 @@
 - name: Converge
   hosts: all
   vars:
+    filebeat_index_name: customindex
     filebeat_tags:
       - service-X
       - web-tier
