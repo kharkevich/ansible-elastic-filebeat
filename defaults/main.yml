@@ -52,3 +52,5 @@ filebeat_modules:
   # - postgresql
   # - redis
   # - traefik
+
+filebeat_modules_exclude: []
