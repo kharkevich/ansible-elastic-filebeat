@@ -11,9 +11,6 @@ galaxy_info:
 
   min_ansible_version: 2.4
 
-  # If this a Container Enabled role, provide the minimum Ansible Container version.
-  # min_ansible_container_version:
-
   github_branch: master
 
   platforms:
@@ -32,4 +29,4 @@ galaxy_info:
     - filebeat
     - beat
 
-dependencies: []
+  dependencies: []

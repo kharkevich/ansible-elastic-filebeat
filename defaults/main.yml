@@ -24,12 +24,11 @@ filebeat_xpack_monitoring_enabled: false
 
 filebeat_name: "{{ ansible_fqdn }}"
 filebeat_tags: []
-  # - service-X
-  # - web-tier
 
-# These settings control loading the sample dashboards to the Kibana index. Loading
-# the dashboards is disabled by default and can be enabled either by setting the
-# options here, or by using the `-setup` CLI flag or the `setup` command.
+# These settings control loading the sample dashboards to the Kibana index.
+# Loading the dashboards is disabled by default and can be enabled either by
+# setting the options here, or by using the `-setup` CLI flag or
+# the `setup` command.
 filebeat_setup_dashboards: false
 
 # The URL from where to download the dashboards archive. By default this URL
@@ -38,7 +37,7 @@ filebeat_setup_dashboards: false
 # website.
 # filebeat_dashboards_url:
 
-#==========================  Modules configuration ============================
+# ==========================  Modules configuration ============================
 filebeat_modules:
   - system
   # - apache2
