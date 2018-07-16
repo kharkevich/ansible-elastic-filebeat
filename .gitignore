@@ -8,3 +8,4 @@
 .eggs/
 .tox/
 .vagrant/
+.molecule/
