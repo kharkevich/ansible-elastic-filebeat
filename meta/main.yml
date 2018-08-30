@@ -4,7 +4,6 @@ galaxy_info:
   role_name: "elastic_filebeat"
   description: >
     Deploy Filebeat: Lightweight Shipper for Logs
-  company:
 
   issue_tracker_url: https://github.com/kharkevich/ansible-elastic-filebeat/issues
 
