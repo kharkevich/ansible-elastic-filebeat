@@ -7,7 +7,9 @@
     name: filebeat
     state: present
   notify: restart_filebeat
-  become: yes
+  tags:
+    - install-packages
+  become: True
 
 - name: Copy Filebeat configuration.
   template:
@@ -17,7 +19,7 @@
     group: root
     mode: 0644
   notify: restart_filebeat
-  become: yes
+  become: True
 
 - name: Establishing modules
   template:
@@ -27,7 +29,7 @@
     group: root
     mode: 0644
   notify: restart_filebeat
-  become: yes
+  become: True
   with_items: "{{ filebeat_modules }}"
 
 - name: Disabling modules
@@ -36,7 +38,7 @@
     state: absent
   with_items: "{{ filebeat_list_modules }}"
   when: (item not in filebeat_modules) and (item not in filebeat_modules_exclude)
-  become: yes
+  become: True
   notify: restart_filebeat
 
 - name: Erase unmanaged modules
@@ -45,5 +47,5 @@
     state: absent
   with_fileglob:
     - "/etc/filebeat/modules.d/*.yml.disabled"
-  become: yes
+  become: True
   notify: restart_filebeat

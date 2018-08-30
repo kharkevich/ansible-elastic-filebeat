@@ -5,5 +5,5 @@
   service:
     name: filebeat
     state: restarted
-    enabled: yes
-  become: yes
+    enabled: True
+  become: True

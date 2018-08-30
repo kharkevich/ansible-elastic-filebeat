@@ -20,7 +20,7 @@ elasticsearch_protocol: http
 # Available log levels are: error, warning, info, debug
 log_level: info
 
-filebeat_xpack_monitoring_enabled: false
+filebeat_xpack_monitoring_enabled: False
 
 filebeat_name: "{{ ansible_fqdn }}"
 filebeat_tags: []
@@ -29,7 +29,7 @@ filebeat_tags: []
 # Loading the dashboards is disabled by default and can be enabled either by
 # setting the options here, or by using the `-setup` CLI flag or
 # the `setup` command.
-filebeat_setup_dashboards: false
+filebeat_setup_dashboards: False
 
 # The URL from where to download the dashboards archive. By default this URL
 # has a value which is computed based on the Beat name and version. For released

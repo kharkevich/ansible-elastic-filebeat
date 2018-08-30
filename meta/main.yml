@@ -1,6 +1,7 @@
 ---
 galaxy_info:
   author: Aliaksandr Kharkevich
+  role_name: "elastic_filebeat"
   description: >
     Deploy Filebeat: Lightweight Shipper for Logs
   company:
@@ -29,4 +30,4 @@ galaxy_info:
     - filebeat
     - beat
 
-  dependencies: []
+dependencies: []
