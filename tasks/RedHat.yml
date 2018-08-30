@@ -3,6 +3,8 @@
   rpm_key:
     key: https://packages.elastic.co/GPG-KEY-elasticsearch
     state: present
+  tags:
+    - install-packages
   become: True
 
 - name: add Elastic repository
@@ -12,4 +14,6 @@
     baseurl: "https://artifacts.elastic.co/packages/{{ elastic_version }}/yum"
     gpgkey: https://artifacts.elastic.co/GPG-KEY-elasticsearch
     gpgcheck: True
+  tags:
+    - install-packages
   become: True

@@ -1,6 +1,8 @@
 ---
 # tasks file for ansible-elastic-filebeat
 - include_tasks: "{{ ansible_os_family  }}.yml"
+  tags:
+    - install-packages
 
 - name: Install Filebeat
   package:
