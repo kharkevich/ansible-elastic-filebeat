@@ -1,7 +1,7 @@
 ---
 # defaults file for ansible-elastic-filebeat
 elastic_version: 6.x
-kibana_host: "http://localhost:5601"
+# kibana_host: "http://localhost:5601"
 elasticsearch_hosts:
   - localhost:9200
 

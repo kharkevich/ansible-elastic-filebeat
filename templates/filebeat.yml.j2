@@ -118,6 +118,7 @@ setup.dashboards.index: "{{ filebeat_index_name }}-*"
 
 # Starting with Beats version 6.0.0, the dashboards are loaded via the Kibana API.
 # This requires a Kibana endpoint configuration.
+{% if kibana_host is defined %}
 setup.kibana:
 
   # Kibana Host
@@ -125,6 +126,7 @@ setup.kibana:
   # In case you specify and additional path, the scheme is required: http://localhost:5601/path
   # IPv6 addresses should always be defined as: https://[2001:db8::1]:5601
   host: "{{ kibana_host }}"
+{% endif %}
 
 #============================= Elastic Cloud ==================================
 
@@ -138,7 +140,27 @@ setup.kibana:
 # The cloud.auth setting overwrites the `output.elasticsearch.username` and
 # `output.elasticsearch.password` settings. The format is `<user>:<pass>`.
 #cloud.auth:
-
+#================================ Filebeat =====================================
+{% if filebeat_input_options is defined %}
+filebeat.inputs:
+{% for option in filebeat_input_options %}
+- type: {{ option.type }}
+  paths:
+{% for path in option.paths %}
+    - {{ path }}
+{% endfor %}
+  fields:
+{% for field, value in option.fields.iteritems() %}
+    {{ field }}: {{ value }}
+{% endfor %}
+{% for field, value in option.additional_options.iteritems() %}
+  {{ field }}: {{ value }}
+{% endfor %}
+{% endfor %}
+{% if filebeat_registry is defined %}
+registry_file: {{ filebeat_registry }}
+{% endif %}
+{% endif %}
 #================================ Outputs =====================================
 
 # Configure what output to use when sending the data collected by the beat.
@@ -166,10 +188,12 @@ output.elasticsearch:
 
 {% elif filebeat_output == 'logstash' %}
 #----------------------------- Logstash output --------------------------------
-#output.logstash:
+output.logstash:
   # The Logstash hosts
-  #hosts: ["localhost:5044"]
-
+  hosts: {{ logstash_hosts | to_yaml }}
+{% if filebeat_logstash_cert is defined %}
+  ssl.certificate_authorities: {{ filebeat_logstash_cert }}
+{% endif %}
   # Optional SSL. By default is off.
   # List of root certificates for HTTPS server verifications
   #ssl.certificate_authorities: ["/etc/pki/root/ca.pem"]
