@@ -76,7 +76,7 @@ filebeat.config.modules:
   #reload.period: 10s
 
 #==================== Elasticsearch template setting ==========================
-
+{% if filebeat_output == 'elasticsearch' %}
 setup.template.settings:
   index.number_of_shards: 3
   index.codec: best_compression
@@ -86,7 +86,7 @@ setup.template.settings:
 setup.template.name: "{{ filebeat_index_name }}"
 setup.template.pattern: "{{ filebeat_index_name }}-*"
 {% endif %}
-
+{% endif %}
 #================================ General =====================================
 
 # The name of the shipper that publishes the network data. It can be used to group
