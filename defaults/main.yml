@@ -8,6 +8,8 @@ elasticsearch_hosts:
 # valid values: elasticsearch, logstash
 filebeat_output: elasticsearch
 
+# valid values: prospectors, inputs
+filebeat_service_agent: prospectors
 # custom index name for filebeat
 # filebeat_index_name: filebeat
 

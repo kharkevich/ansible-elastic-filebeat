@@ -10,8 +10,8 @@
 # For more available modules and options, please see the filebeat.reference.yml sample
 # configuration file.
 
+{% if filebeat_service_agent == 'prospectors' %}
 #=========================== Filebeat prospectors =============================
-
 filebeat.prospectors:
 
 # Each - is a prospector. Most options can be set at the prospector level, so
@@ -62,85 +62,8 @@ filebeat.prospectors:
   # Note: After is the equivalent to previous and before is the equivalent to to next in Logstash
   #multiline.match: after
 
-
-#============================= Filebeat modules ===============================
-
-filebeat.config.modules:
-  # Glob pattern for configuration loading
-  path: ${path.config}/modules.d/*.yml
-
-  # Set to true to enable config reloading
-  reload.enabled: false
-
-  # Period on which files under path should be checked for changes
-  #reload.period: 10s
-
-#==================== Elasticsearch template setting ==========================
-{% if filebeat_output == 'elasticsearch' %}
-setup.template.settings:
-  index.number_of_shards: 3
-  index.codec: best_compression
-  #_source.enabled: false
-
-{% if filebeat_index_name is defined %}
-setup.template.name: "{{ filebeat_index_name }}"
-setup.template.pattern: "{{ filebeat_index_name }}-*"
-{% endif %}
-{% endif %}
-#================================ General =====================================
-
-# The name of the shipper that publishes the network data. It can be used to group
-# all the transactions sent by a single shipper in the web interface.
-name: {{ filebeat_name }}
-
-# The tags of the shipper are included in their own field with each
-# transaction published.
-tags: {{ filebeat_tags | to_yaml }}
-
-# Optional fields that you can specify to add additional information to the
-# output.
-#fields:
-#  env: staging
-
-
-#============================== Dashboards =====================================
-setup.dashboards.enabled: {{ filebeat_setup_dashboards }}
-
-{% if filebeat_dashboards_url is defined %}
-setup.dashboards.url: "{{ filebeat_dashboards_url }}"
-{% endif %}
-
-{% if filebeat_index_name is defined %}
-setup.dashboards.index: "{{ filebeat_index_name }}-*"
-{% endif %}
-
-#============================== Kibana =====================================
-
-# Starting with Beats version 6.0.0, the dashboards are loaded via the Kibana API.
-# This requires a Kibana endpoint configuration.
-{% if kibana_host is defined %}
-setup.kibana:
-
-  # Kibana Host
-  # Scheme and port can be left out and will be set to the default (http and 5601)
-  # In case you specify and additional path, the scheme is required: http://localhost:5601/path
-  # IPv6 addresses should always be defined as: https://[2001:db8::1]:5601
-  host: "{{ kibana_host }}"
-{% endif %}
-
-#============================= Elastic Cloud ==================================
-
-# These settings simplify using filebeat with the Elastic Cloud (https://cloud.elastic.co/).
-
-# The cloud.id setting overwrites the `output.elasticsearch.hosts` and
-# `setup.kibana.host` options.
-# You can find the `cloud.id` in the Elastic Cloud web UI.
-#cloud.id:
-
-# The cloud.auth setting overwrites the `output.elasticsearch.username` and
-# `output.elasticsearch.password` settings. The format is `<user>:<pass>`.
-#cloud.auth:
-#================================ Filebeat =====================================
+{% elif filebeat_service_agent == 'inputs' %}
+#================================ Filebeat inputs =====================================
 {% if filebeat_input_options is defined %}
 filebeat.inputs:
 {% for option in filebeat_input_options %}
@@ -161,6 +84,87 @@ filebeat.inputs:
 registry_file: {{ filebeat_registry }}
 {% endif %}
 {% endif %}
+
+{% endif %}
+#============================= Filebeat modules ===============================
+
+filebeat.config.modules:
+  # Glob pattern for configuration loading
+  path: ${path.config}/modules.d/*.yml
+
+  # Set to true to enable config reloading
+  reload.enabled: false
+
+  # Period on which files under path should be checked for changes
+  #reload.period: 10s
+
+{% if filebeat_output == 'elasticsearch' %}
+#==================== Elasticsearch template setting ==========================
+setup.template.settings:
+  index.number_of_shards: 3
+  index.codec: best_compression
+  #_source.enabled: false
+
+{% if filebeat_index_name is defined %}
+setup.template.name: "{{ filebeat_index_name }}"
+setup.template.pattern: "{{ filebeat_index_name }}-*"
+{% endif %}
+
+{% endif %}
+#================================ General =====================================
+
+# The name of the shipper that publishes the network data. It can be used to group
+# all the transactions sent by a single shipper in the web interface.
+name: {{ filebeat_name }}
+
+# The tags of the shipper are included in their own field with each
+# transaction published.
+tags: {{ filebeat_tags | to_yaml }}
+
+# Optional fields that you can specify to add additional information to the
+# output.
+#fields:
+#  env: staging
+
+#============================== Dashboards =====================================
+setup.dashboards.enabled: {{ filebeat_setup_dashboards }}
+
+{% if filebeat_dashboards_url is defined %}
+setup.dashboards.url: "{{ filebeat_dashboards_url }}"
+{% endif %}
+
+{% if filebeat_index_name is defined %}
+setup.dashboards.index: "{{ filebeat_index_name }}-*"
+
+{% endif %}
+{% if kibana_host is defined %}
+#============================== Kibana =====================================
+
+# Starting with Beats version 6.0.0, the dashboards are loaded via the Kibana API.
+# This requires a Kibana endpoint configuration.
+
+setup.kibana:
+
+  # Kibana Host
+  # Scheme and port can be left out and will be set to the default (http and 5601)
+  # In case you specify and additional path, the scheme is required: http://localhost:5601/path
+  # IPv6 addresses should always be defined as: https://[2001:db8::1]:5601
+  host: "{{ kibana_host }}"
+
+{% endif %}
+#============================= Elastic Cloud ==================================
+
+# These settings simplify using filebeat with the Elastic Cloud (https://cloud.elastic.co/).
+
+# The cloud.id setting overwrites the `output.elasticsearch.hosts` and
+# `setup.kibana.host` options.
+# You can find the `cloud.id` in the Elastic Cloud web UI.
+#cloud.id:
+
+# The cloud.auth setting overwrites the `output.elasticsearch.username` and
+# `output.elasticsearch.password` settings. The format is `<user>:<pass>`.
+#cloud.auth:
+
 #================================ Outputs =====================================
 
 # Configure what output to use when sending the data collected by the beat.
@@ -184,8 +188,8 @@ output.elasticsearch:
 
 {% if elasticsearch_password is defined %}
   password: "{{ elasticsearch_password }}"
-{% endif %}
 
+{% endif %}
 {% elif filebeat_output == 'logstash' %}
 #----------------------------- Logstash output --------------------------------
 output.logstash:
@@ -203,6 +207,7 @@ output.logstash:
 
   # Client Certificate Key
   #ssl.key: "/etc/pki/client/cert.key"
+
 {% endif %}
 #================================ Logging =====================================
 
